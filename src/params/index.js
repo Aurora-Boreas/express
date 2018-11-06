@@ -36,7 +36,12 @@ app.get('/api/catalog', function (req, res) {
   })
 })
 
-
+// app.get('/api/catalog', function (req, res) {
+// let.size_item = req.param('size')
+// let.from_item = req.param('from')
+// let.sort_item = req.param('sort')
+// }
+res.send(size_item+''+from_item+''+sort_item)});
 // app.param(['size','from','sort'], function(req, res, next, sorting))
 
 app.use('/api/catalog', function (req, res, next) {
