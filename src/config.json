@@ -1,5 +1,14 @@
 {
-	"port": 8079,
-	"bodyLimit": "100kb",
-	"corsHeaders": ["Link"]
+	"server": {
+		"port": 8079,
+		"bodyLimit": "100kb",
+		"corsHeaders": ["Link"]
+	},
+	"elasticsearch": {
+		"host": "localhost",
+		"port": "9200",
+		"indices": [
+			"test_catalog"
+		]
+	}
 }
