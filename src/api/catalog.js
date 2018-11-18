@@ -17,9 +17,14 @@ export default ({config, db}) => function (req, res, body) {
 //
 	let indexName = ''
 	let entityType = ''
-	if (urlSegments.length < 2) {
+	if (urlSegments.length <= 2)
 		throw new Error('No index name given in the URL. Please do use following URL format: /api/catalog/<index_name>/<entity_type>_search')
-	};
+	else if (urlSegments.length > 2)
+		indexName = urlSegments[1];
+		entityType = urlSegments[2];
+		if ((config.esIndexes !== indexName) || (config.esEntity !== entityType)) {
+			throw new Error('Invalid/inaccessible index name or entity type given in the URL. Please do use following URL format: /api/catalog/<index_name>/<entity_type>_search')
+		}
 
 // 	// pass the request to elasticsearch
 	let url = 'http://' + config.elasticsearch.host + ':' + config.elasticsearch.port + req.url;

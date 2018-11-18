@@ -10,5 +10,7 @@
 		"indices": [
 			"test_catalog"
 		]
-	}
+	},
+	"esIndexes": "catalog",
+	"esEntity": "products"
 }
