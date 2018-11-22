@@ -20,13 +20,21 @@ const es_client = elasticsearch.Client({
 })
 const es_index = 'ecs_index'
 const es_type = 'ecs_type'
+
+const urlSegments = req.url.split('/');
+
+
+let indexName = ''
+let entityType = ''
 app.get('/api/catalog', function (req, res) {
   es_client.search({
     index: es_index,
     type: es_type,
     body: {
       query: {
-        match_all: {}
+        "query_string": {
+          "fields": ["size", "from", "sort"],
+        }
       }
     }
   }).then(function(response){
@@ -36,12 +44,14 @@ app.get('/api/catalog', function (req, res) {
   })
 })
 
+
+
 // app.get('/api/catalog', function (req, res) {
 // let.size_item = req.param('size')
 // let.from_item = req.param('from')
 // let.sort_item = req.param('sort')
 // }
-res.send(size_item+''+from_item+''+sort_item)});
+// res.send(size_item+''+from_item+''+sort_item)});
 // app.param(['size','from','sort'], function(req, res, next, sorting))
 
 app.use('/api/catalog', function (req, res, next) {
@@ -50,10 +60,7 @@ app.use('/api/catalog', function (req, res, next) {
   next(err);
 })
 
-app.use('/api/catalog', function (err, req, res, next) {
-  if (res.headersSent) {
-    return next(err);
-  }
-  res.status(500);
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
   res.render('error', { error: err });
 })
