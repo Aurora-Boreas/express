@@ -19,7 +19,7 @@ class ProductProcessor {
   prepareProductsData (items) {
     return _.each(items, (item) => {
       let itemSource = item._source ? item._source : item
-      let product_id = typeof itemSource.values['product_id']!= 'undefined' ? itemSource.values['product_id'] : null
+      let product_id = typeof itemSource.values['product_id']!== 'undefined' ? itemSource.values['product_id'] : null
       let value = itemSource.values['value'] && parseFloat(itemSource.values['value']) ? parseFloat(itemSource.values['value']) : 0
 
       itemSource.product_id = product_id
@@ -54,7 +54,7 @@ class ProductProcessor {
 
       this.esClient.search(esQuery).then(function (resp) {
         // handle result
-        if (resp == null) {
+        if (resp === null) {
           throw new Error('Invalid ES result - null not excepted')
         }
       }).catch(function (err) {
